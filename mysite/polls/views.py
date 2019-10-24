@@ -7,13 +7,15 @@ from .models import Question
 
 def index(request):
     """ Show all questions """
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    latest_question_list = Question.objects.order_by('-pub_date')[:3]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
     """ Show a single questions """
-    return HttpResponse("You're looking at question %s." % question_id)
+    question = Question.objects.get(id=question_id)
+    context = {'question': question}
+    return render(request, 'polls/poll.html', context)
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."
